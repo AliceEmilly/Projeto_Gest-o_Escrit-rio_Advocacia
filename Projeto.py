@@ -1,6 +1,69 @@
 import os
 import pickle
 
+def recupera_clientes():
+    try:
+        clientes= {}
+        arq_clientes = open("clientes.dat", "rb")
+        clientes = pickle.load(arq_clientes)
+        arq_clientes.close()
+    except:
+        clientes = {
+            "333.333.333-33": ["Fred Flinstone", "(66)66666-6666", "fred@flinstone.com", "Ativo"],
+            "22.222.222/2222-22": ["Empresa X", "(77)77777-7777", "x@empresa.com", "Inativo"]
+        }
+        arq_clientes = open("clientes.dat", "wb")
+        pickle.dump(clientes, arq_clientes)
+        arq_clientes.close()
+    return clientes
+
+def recupera_advogados():
+    try:
+        advogados= {}
+        arq_advogados = open("advogados.dat", "rb")
+        advogados = pickle.load(arq_advogados) 
+        arq_advogados.close()
+    except:
+        advogados = {
+            "78901/PB": ["Jack McCoy", "Direito Penal", "(55)55555-5555", "jack@gmail.com", "Ativo"],
+            "45232/CE": ["Matt Murdock","Direito Civil e Trabalhista", "(70)70707-0707", "matt@gmail.com", "Ativo"]    
+        }
+        arq_advogados = open("advogados.dat", "wb")
+        pickle.dump(advogados, arq_advogados)
+        arq_advogados.close()
+    return advogados 
+
+def recupera_processos():
+    try:
+        processos= {}
+        arq_processos = open("processos.dat", "rb")
+        processos = pickle.load(arq_processos)
+        arq_processos.close()
+    except:
+        processos = {
+            "0005621-07": ["Ação Penal por Homicídio", "Fred Flinstone", "Jack McCoy", "21/05/2026", "Ativo"],
+            "0002847-33": ["Reclamação Trabalhista Rescisória", "Empresa X",  "Matt Murdock", "10/02/2026", "Encerrado"]
+        }
+        arq_processos = open("processos.dat", "wb")
+        pickle.dump(processos, arq_processos)
+        arq_processos.close()
+    return processos
+
+def grava_clientes(clientes):
+    arq_clientes = open("clientes.dat", "wb")
+    pickle.dump(clientes, arq_clientes)
+    arq_clientes.close()
+
+def grava_advogados(advogados):
+    arq_advogados = open("advogados.dat", "wb")
+    pickle.dump(advogados, arq_advogados)
+    arq_advogados.close()
+
+def grava_processos(processos):
+    arq_processos = open("processos.dat", "wb")
+    pickle.dump(processos, arq_processos)
+    arq_processos.close()
+
 def validaNome():
     nome = input("Nome: ")
     while nome == "":
@@ -74,47 +137,9 @@ def validaDescricao():
         desc = input("Descrição: ")
     return desc
 
-clientes= {}
-try:
-    arq_clientes = open("clientes.dat", "rb")
-    clientes = pickle.load(arq_clientes)
-    arq_clientes.close()
-except:
-    clientes = {
-        "333.333.333-33": ["Fred Flinstone", "(66)66666-6666", "fred@flinstone.com", "Ativo"],
-        "22.222.222/2222-22": ["Empresa X", "(77)77777-7777", "x@empresa.com", "Inativo"]
-    }
-    arq_clientes = open("clientes.dat", "wb")
-    pickle.dump(clientes, arq_clientes)
-    arq_clientes.close
-
-advogados= {}
-try:
-    arq_advogados = open("advogados.dat", "rb")
-    advogados = pickle.load(arq_advogados) 
-    arq_advogados.close()
-except:
-    advogados = {
-        "78901/PB": ["Jack McCoy", "Direito Penal", "(55)55555-5555", "jack@gmail.com", "Ativo"],
-        "45232/CE": ["Matt Murdock","Direito Civil e Trabalhista", "(70)70707-0707", "matt@gmail.com", "Ativo"]    
-    }
-    arq_advogados = open("advogados.dat", "wb")
-    pickle.dump(advogados, arq_advogados)
-    arq_advogados.close
-
-processos= {}
-try:
-    arq_processos = open("processos.dat", "rb")
-    processos = pickle.load(arq_processos)
-    arq_processos.close()
-except:
-    processos = {
-        "0005621-07": ["Ação Penal por Homicídio", "Fred Flinstone", "Jack McCoy", "21/05/2026", "Ativo"],
-        "0002847-33": ["Reclamação Trabalhista Rescisória", "Empresa X",  "Matt Murdock", "10/02/2026", "Encerrado"]
-    }
-    arq_processos = open("processos.dat", "wb")
-    pickle.dump(processos, arq_processos)
-    arq_processos.close
+clientes = recupera_clientes()
+advogados = recupera_advogados()
+processos = recupera_processos()
 
 func = True
 while func:
@@ -162,9 +187,7 @@ while func:
                 telefone = validaTelefone()
                 status = "Ativo"
                 clientes[cpf_cnpj] = [nome, telefone, email, status]
-                arq_clientes = open("clientes.dat", "wb")
-                pickle.dump(clientes, arq_clientes)
-                arq_clientes.close()
+                grava_clientes(clientes)
                 print()
                 print("Cliente cadastrado com sucesso!!!")
                 print("Clientes: ", clientes)
@@ -214,9 +237,7 @@ while func:
                    else:
                        status = "Ativo"
                clientes[id] = [nome, telefone, email, status]
-               arq_clientes = open("clientes.dat", "wb")
-               pickle.dump(clientes, arq_clientes)
-               arq_clientes.close()
+               grava_clientes(clientes)
                print()
                print("Cliente atualizado com sucesso!!!")
                print("Clientes: ", clientes)
@@ -242,9 +263,7 @@ while func:
               confirmacao = input("Deixa excluir(S/N)? ")
               if confirmacao.lower() == "s":
                 clientes[id][3] = "Inativo"
-                arq_clientes = open("clientes.dat", "wb")
-                pickle.dump(clientes, arq_clientes)
-                arq_clientes.close()
+                grava_clientes(clientes)
                 print()
                 print("Cliente desativado com sucesso!!!")
                 print("Clientes: ", clientes)
@@ -295,9 +314,7 @@ while func:
                 email = validaEmail()
                 status = "Ativo"
             advogados[oab] = [nome, espec, telefone, email, status]
-            arq_advogados = open("advogados.dat", "wb")
-            pickle.dump(advogados, arq_advogados)
-            arq_advogados.close()
+            grava_advogados(advogados)
             print()
             print("Advogado cadastrado com sucesso!!!")
             print("Advogados: ", advogados)
@@ -351,9 +368,7 @@ while func:
                    else:
                        status = "Ativo"
                 advogados[id] = [nome, espec, telefone, email, status]
-                arq_advogados = open("advogados.dat", "wb")
-                pickle.dump(advogados, arq_advogados)
-                arq_advogados.close()
+                grava_advogados(advogados)
                 print()
                 print("Advogado atualizado com sucesso!!!")
                 print("Advogados: ", advogados)
@@ -380,9 +395,7 @@ while func:
                 confirmacao = input("Deseja excluir(S/N)? ")
                 if confirmacao.lower() == "s":
                     advogados[id][4] = "Inativo"
-                    arq_advogados = open("advogados.dat", "wb")
-                    pickle.dump(advogados, arq_advogados)
-                    arq_advogados.close()
+                    grava_advogados(advogados)
                     print()
                     print("Advogado desativado com sucesso!!!")
                     print("Advogados: ", advogados)
@@ -453,9 +466,7 @@ while func:
             data = input("Data do cadastro(XX/YY/XYXY): ")
             status= "Ativo"
             processos[numero] = [assunto, cliente, advogado, data, status]
-            arq_processos = open("processos.dat", "wb")
-            pickle.dump(processos, arq_processos)
-            arq_processos.close
+            grava_processos(processos)
             print()
             print("Processo aberto com sucesso!!!")
             print("Processos: ", processos)
@@ -519,9 +530,7 @@ while func:
                    else:
                        status = "Ativo"
                 processos[id] = [assunto,processos[id][1], advogado, processos[id][3], status]
-                arq_processos = open("processos.dat", "wb")
-                pickle.dump(processos, arq_processos)
-                arq_processos.close
+                grava_processos(processos)
                 print()
                 print("Processo atualizado com sucesso!!!")
                 print("Processos: ", processos)
@@ -548,9 +557,7 @@ while func:
                 confirmacao = input("Deseja excluir(S/N)? ")
                 if confirmacao.lower() == "s":
                     processos[id][4] = "Encerrado"
-                    arq_processos = open("processos.dat", "wb")
-                    pickle.dump(processos, arq_processos)
-                    arq_processos.close
+                    grava_processos(processos)
                     print()
                     print("Processo encerrado com sucesso!!!")
                     print("Processos: ", processos)
