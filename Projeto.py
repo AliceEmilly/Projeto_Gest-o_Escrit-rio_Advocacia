@@ -102,6 +102,10 @@ def validaCpf_Cnpj():
 
 def validaOab():
     oab = input("Nº da OAB(XXXXXX/YY): ")
+    while oab.count("/") != 1:
+        print()
+        print("OAB inválida! Tente novamente!")
+        oab = input("Nº da OAB: ")
     n, uf = oab.split("/")
     while (oab == "") or (not n.isnumeric()) or (len(uf) != 2 or (not(uf.isalpha()))):
         print()
@@ -128,7 +132,6 @@ def validaNumero():
         numS = num.replace("-", "")
     return num
 
-
 def validaDescricao():
     desc = input("Breve descrição: ")
     while desc == "":
@@ -136,6 +139,19 @@ def validaDescricao():
         print()
         desc = input("Descrição: ")
     return desc
+
+def validaData():
+    data = input("Data do cadastro(XX/YY/XYXY): ")
+    while data.count("/") != 1:
+        print()
+        print("Formato da data inválido! Tente novamente!")
+        data = input("Data do cadastro(XX/YY/XYXY): ")
+    dia, mes, ano = map(int, data.split('/'))
+    while (data == "") or ((ano<=0) or (mes<1 or mes>12) or (dia<=0 or dia>31)):
+        print()
+        print("Data inválida! Tente novamente!")
+        data = input("Data do cadastro(XX/YY/XYXY): ")
+        dia, mes, ano = map(int, data.split('/'))
 
 clientes = recupera_clientes()
 advogados = recupera_advogados()
@@ -207,8 +223,8 @@ while func:
               print("Email: ", clientes[id][2])
               print("Status: ", clientes[id][3])
             else:
-               print("Cliente não encontrado!")
-            print("\t\t-----------------------")
+               print("Cliente não encontrado! Certifique-se de que digitou o CPF/CNPJ da forma exata que está no cadastro.")
+            print("-" * 100)
             input("Tecle ENTER para voltar ao menu de clientes...")
             os.system('cls' if os.name == 'nt' else 'clear')
             print()
@@ -243,8 +259,8 @@ while func:
                print("Clientes: ", clientes)
                print()
             else:
-               print("Cliente não encontrado!")
-            print("\t\t--------------------")
+               print("Cliente não encontrado! Certifique-se de que digitou o CPF/CNPJ da forma exata que está no cadastro.")
+            print("-" * 100)
             input("Tecle ENTER para voltar ao menu de clientes...")
             os.system('cls' if os.name == 'nt' else 'clear')
             print()
@@ -258,18 +274,20 @@ while func:
               print("Nome: ", clientes[id][0])
               print("Telefone: ", clientes[id][1])
               print("Email: ", clientes[id][2])
-              print("Status: ", clientes[id][3])
               print()
               confirmacao = input("Deixa excluir(S/N)? ")
               if confirmacao.lower() == "s":
-                clientes[id][3] = "Inativo"
-                grava_clientes(clientes)
-                print()
-                print("Cliente desativado com sucesso!!!")
-                print("Clientes: ", clientes)
+                if clientes[id][3] == "Inativo":
+                        print("Esse cliente já está inativo!!")
+                else:
+                    clientes[id][3] = "Inativo"
+                    grava_clientes(clientes)
+                    print()
+                    print("Cliente desativado com sucesso!!!")
+                    print("Clientes: ", clientes)
             else:
-               print("Cliente não encontrado!")
-            print("\t\t--------------------")
+               print("Cliente não encontrado! Certifique-se de que digitou o CPF/CNPJ da forma exata que está no cadastro.")
+            print("-" * 100)
             input("Tecle ENTER para voltar ao menu de clientes...")
             os.system('cls' if os.name == 'nt' else 'clear')
             print()
@@ -336,8 +354,8 @@ while func:
                 print("Email: ", advogados[id][3])
                 print("Status: ", advogados[id][4])
             else:
-                print("Advogado não encontrado!")
-            print("\t\t---------------------")
+                print("Advogado não encontrado! Certifique-se de que digitou a OAB da forma exata que está no cadastro.")
+            print("-" * 100)
             input("Tecle ENTER para voltar ao menu de advogados...")
             os.system('cls' if os.name == 'nt' else 'clear')
             print()
@@ -374,8 +392,8 @@ while func:
                 print("Advogados: ", advogados)
                 print()
             else:
-                print("Advogado não encontrado!")
-            print("\t\t---------------------")
+                print("Advogado não encontrado! Certifique-se de que digitou a OAB da forma exata que está no cadastro.")
+            print("-" * 100)
             input("Tecle ENTER para voltar ao menu de advogados...")
             os.system('cls' if os.name == 'nt' else 'clear')
             print()
@@ -390,18 +408,19 @@ while func:
                 print("Especialidade: ", advogados[id][1])
                 print("Telefone: ", advogados[id][2])
                 print("Email: ", advogados[id][3])
-                print("Status: ", advogados[id][4])
                 print()
                 confirmacao = input("Deseja excluir(S/N)? ")
-                if confirmacao.lower() == "s":
+                if advogados[id][4] == "Inativo":
+                        print("Esse advogado já está inativo!!")
+                else:
                     advogados[id][4] = "Inativo"
                     grava_advogados(advogados)
                     print()
                     print("Advogado desativado com sucesso!!!")
                     print("Advogados: ", advogados)
             else:
-                print("Advogado não encontrado!")
-            print("\t\t---------------------")
+                print("Advogado não encontrado! Certifique-se de que digitou a OAB da forma exata que está no cadastro.")
+            print("-" * 100)
             input("Tecle ENTER para voltar ao menu de advogados...")
             os.system('cls' if os.name == 'nt' else 'clear')
             print()
@@ -463,7 +482,7 @@ while func:
                input("Tecle ENTER para voltar ao menu principal ...")
                os.system('cls' if os.name == 'nt' else 'clear')
                break
-            data = input("Data do cadastro(XX/YY/XYXY): ")
+            data = validaData()
             status= "Ativo"
             processos[numero] = [assunto, cliente, advogado, data, status]
             grava_processos(processos)
@@ -487,8 +506,8 @@ while func:
                 print("Data do cadastro: ", processos[id][3])
                 print("Status: ", processos[id][4])
             else:
-                print("Processo não encontrado!Cadastre o processo antes de visualizar!")
-            print("\t\t---------------------")
+                print("Processo não encontrado! Certifique-se de que digitou o código da forma exata que está no cadastro.")
+            print("-" * 100)
             input("Tecle ENTER para voltar ao menu de processos...")
             os.system('cls' if os.name == 'nt' else 'clear')
             print()
@@ -536,8 +555,8 @@ while func:
                 print("Processos: ", processos)
                 print()
             else:
-                print("Processo não encontrado!")
-            print("\t\t---------------------")
+                print("Processo não encontrado! Certifique-se de que digitou o código da forma exata que está no cadastro.")
+            print("-" * 100)
             input("Tecle ENTER para voltar ao menu de processos...")
             os.system('cls' if os.name == 'nt' else 'clear')
             print()
@@ -552,18 +571,20 @@ while func:
                 print("Cliente relacionado: ", processos[id][1])
                 print("Advogado responsável: ", processos[id][2])
                 print("Data do cadastro: ", processos[id][3])
-                print("Status: ", processos[id][4])
                 print()
                 confirmacao = input("Deseja excluir(S/N)? ")
                 if confirmacao.lower() == "s":
-                    processos[id][4] = "Encerrado"
-                    grava_processos(processos)
-                    print()
-                    print("Processo encerrado com sucesso!!!")
-                    print("Processos: ", processos)
+                    if processos[id][4] == "Encerrado":
+                        print("Esse processo já está encerrado!!")
+                    else:
+                        processos[id][4] = "Encerrado"
+                        grava_processos(processos)
+                        print()
+                        print("Processo encerrado com sucesso!!!")
+                        print("Processos: ", processos)
             else:
-                print("Processo não encontrado!")
-            print("\t\t---------------------")
+                print("Processo não encontrado! Certifique-se de que digitou o código da forma exata que está no cadastro.")
+            print("-" * 100)
             input("Tecle ENTER para voltar ao menu de processos...")
             os.system('cls' if os.name == 'nt' else 'clear')
             print()
@@ -589,12 +610,46 @@ while func:
     print("5- Lista Geral de Processos p/ Advogado")
     print("0- Retornar ao Menu Principal")
     print()
-    acao = int(input("Escolha o que você deseja listar: "))
-    print()
-    print("###MÓDULO EM DESENVOLVIMENTO###")
-    print("----------------------------------------------")
-    input("Tecle ENTER para voltar ao menu principal...")
+    acao = input("Escolha o que você deseja listar: ")
     os.system('cls' if os.name == 'nt' else 'clear')
+    print()
+    if acao == "1":
+        print(f"{'CPF/CNPJ':^20} | {'NOME':^25} | {'TELEFONE':^20} | {'EMAIL':^15}")
+        print("-" * 90)
+        for cpf in clientes:
+            if clientes[cpf][3] == "Ativo":
+                print(f"{cpf:<20} | {clientes[cpf][0]:<25} | {clientes[cpf][1]:<20} | {clientes[cpf][2]:<15}")
+                print()
+        print()
+        input("Tecle ENTER para voltar ao menu principal...")
+        os.system('cls' if os.name == 'nt' else 'clear')
+    
+    elif acao == "2":
+        print(f"{'OAB':^10} | {'NOME':^25} | {'ESPECIALIDADE':^30} | {'TELEFONE':^20} | {'EMAIL':^15}")
+        print("-" * 112) 
+        for oab in advogados:
+            if advogados[oab][4] == "Ativo":
+                print(f"{oab:<10} | {advogados[oab][0]:<25} | {advogados[oab][1]:<30} | {advogados[oab][2]:<20} | {advogados[oab][3]:<15}")
+                print()
+        print()
+        input("Tecle ENTER para voltar ao menu principal...")
+        os.system('cls' if os.name == 'nt' else 'clear')
+
+
+    elif acao == "3":
+        print(f"{'CÓDIGO':^10} | {'DESCRIÇÃO':^25} | {'CLIENTE':^20} | {'ADVOGADO':^20} | {'DATA CADASTRO':^15}")
+        print("-" * 100) 
+        for numero in processos:
+            if processos[numero][4] == "Ativo":
+                print(f"{numero:<10} | {processos[numero][0]:<25} | {processos[numero][1]:<20} | {processos[numero][2]:<20} | {processos[numero][3]:<15}")
+                print()
+        input("Tecle ENTER para voltar ao menu principal...")
+        os.system('cls' if os.name == 'nt' else 'clear')
+    
+    else:
+        print("----------------------------------------------")
+        input("Tecle ENTER para voltar ao menu principal...")
+        os.system('cls' if os.name == 'nt' else 'clear')
   
   elif op == "5":
     print("\t\tMÓDULO DE INFORMAÇÕES")
