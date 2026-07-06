@@ -22,15 +22,15 @@ while func:
   print("5) Módulo Informações ")
   print("0) Sair do Programa ")
   print()
-  op = input("Escolha um número/opção: ")
+  op = input("Escolha um número/opção: ").strip()
   os.system('cls' if os.name == 'nt' else 'clear')
   print()
   
   if op == "1":
-    modulo_clientes(clientes)
+    modulo_clientes(clientes,processos)
     
   elif op == "2":
-    modulo_advogados(advogados)
+    modulo_advogados(advogados,processos)
     
   elif op == "3":
     modulo_processos(processos,clientes,advogados)
@@ -44,10 +44,10 @@ while func:
     print("\t-----------------------------------")
     print("\t| Desenvolvedor(a): Alice Emilly  |")
     print()
-    print("\t| Email: aliceemilly53@gmail.com              |")
+    print("\t| Email: aliceemilly53@gmail.com  |")
     print()
     print("\t| Licença Pública Geral GNU       |")  
-    print("\t----------------------------------")
+    print("\t-----------------------------------")
     input("Tecle ENTER para voltar ao menu principal...")
     os.system('cls' if os.name == 'nt' else 'clear')
     print()
@@ -59,7 +59,7 @@ while func:
     func = False
   
   else:
-    print("Opção inválida! Escolha uma das opções do menu!")
+    print("Opção inválida! Digite uma das opções do menu!")
     print("----------------------------------------------")
     input("Tecle ENTER para voltar ao menu principal...")
     os.system('cls' if os.name == 'nt' else 'clear')

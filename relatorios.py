@@ -11,7 +11,7 @@ def modulo_relatorios(clientes, advogados, processos):
         print("4- Listagem por Filtros ")
         print("0- Retornar ao Menu Principal")
         print()
-        acao1 = input("Escolha o que você deseja listar: ")
+        acao1 = input("Escolha o que você deseja listar: ").strip()
         os.system('cls' if os.name == 'nt' else 'clear')
         print()
         if acao1 == "1":
@@ -54,21 +54,21 @@ def modulo_relatorios(clientes, advogados, processos):
                 print("3) Processos")
                 print("0) Retornar ao Menu de Relatórios ")
                 print()
-                acao2 = input("Escolha o número do que você deseja listar por filtro: ")
+                acao2 = input("Escolha o número do que você deseja listar por filtro: ").strip()
                 os.system('cls' if os.name == 'nt' else 'clear')
                 print()
                 
                 if acao2 == "1":
-                    print("1) Filtrar por nome/sobrenome")
-                    print("2) Filtrar somente os clientes inativos")
+                    print("1) Filtrar por Nome/Sobrenome")
+                    print("2) Filtrar somente os Clientes Inativos")
                     print()
-                    acao3 = input("Informe qual filtro você quer utilizar: ")
+                    acao3 = input("Informe qual filtro você quer utilizar: ").strip()
                     os.system('cls' if os.name == 'nt' else 'clear')
                     print()
-
                     if acao3 == "1":
                         ns = input("Informe o nome ou sobrenome que você deseja pesquisar: ")
                         totalNomes = 0
+                        print("-"*48)
                         for cpf_cnpj in clientes:
                             if clientes[cpf_cnpj][3] == "Ativo": 
                                 if ns.lower() in clientes[cpf_cnpj][0].lower():
@@ -76,6 +76,7 @@ def modulo_relatorios(clientes, advogados, processos):
                                     totalNomes = totalNomes + 1
                         if totalNomes == 0:
                             print(f"Não há clientes cadastrados com o nome/sobrenome {ns}.")
+                        print("-"*48)
                         print()
                         input("Tecle ENTER para voltar ao menu de filtros...")
                         os.system('cls' if os.name == 'nt' else 'clear')
@@ -92,25 +93,25 @@ def modulo_relatorios(clientes, advogados, processos):
                         os.system('cls' if os.name == 'nt' else 'clear')
                     
                     else:
-                        print("Opção inválida! Escolha uma das opções do menu!")
+                        print("Opção inválida! Digite uma das opções do menu!")
                         print("\t\t---------------------")
                         input("Tecle ENTER para voltar ao menu de filtros...")
                         os.system('cls' if os.name == 'nt' else 'clear')
                         print()
 
                 elif acao2 == "2":
-                    print("1) Filtrar por nome/sobrenome")
-                    print("2) Filtrar pelo estado da OAB")
-                    print("3) Filtrar por área do direito")
-                    print("4) Filtrar somente os advogados inativos")
+                    print("1) Filtrar por Nome/Sobrenome")
+                    print("2) Filtrar pelo Estado da OAB")
+                    print("3) Filtrar por Área do Direito")
+                    print("4) Filtrar somente os Advogados Inativos")
                     print()
-                    acao3 = input("Informe qual filtro você quer utilizar: ")
+                    acao3 = input("Informe qual filtro você quer utilizar: ").strip()
                     os.system('cls' if os.name == 'nt' else 'clear')
                     print()
-
                     if acao3 == "1":
                         ns = input("Informe o nome ou sobrenome que você deseja pesquisar: ")
                         totalNomes = 0
+                        print("-"*40)
                         for oab in advogados:
                             if advogados[oab][4] == "Ativo": 
                                 if ns.lower() in advogados[oab][0].lower():
@@ -118,14 +119,15 @@ def modulo_relatorios(clientes, advogados, processos):
                                     totalNomes = totalNomes + 1
                         if totalNomes == 0:
                             print(f"Não há advogados cadastrados com o nome/sobrenome {ns}.")
+                        print("-"*40)
                         print()
                         input("Tecle ENTER para voltar ao menu de filtros...")
                         os.system('cls' if os.name == 'nt' else 'clear')
                     
-                    
                     elif acao3 == "2":
                         estado = input("Informe a sigla do estado brasileiro que você deseja pesquisar: ")
                         totalEstado = 0
+                        print("-"*40)
                         for oab in advogados:
                             if advogados[oab][4] == "Ativo": 
                                 n, uf = oab.split("/")
@@ -134,14 +136,15 @@ def modulo_relatorios(clientes, advogados, processos):
                                     totalEstado = totalEstado + 1
                         if totalEstado == 0:
                             print(f"Não há advogados cadastrados com OAB de {estado}.")
+                        print("-"*40)
                         print()
                         input("Tecle ENTER para voltar ao menu de filtros...")
                         os.system('cls' if os.name == 'nt' else 'clear')
                     
-
                     elif acao3 == "3":
                         area = input("Informe a área do direito que você deseja pesquisar: ")
                         totalArea = 0
+                        print("-"*40)
                         for oab in advogados:
                             if advogados[oab][4] == "Ativo": 
                                 if area.lower() in advogados[oab][1].lower():
@@ -149,6 +152,7 @@ def modulo_relatorios(clientes, advogados, processos):
                                     totalArea = totalArea + 1
                         if totalArea == 0:
                             print(f"Não há advogados cadastrados que atuam no direito {area}.")
+                        print("-"*40)
                         print()
                         input("Tecle ENTER para voltar ao menu de filtros...")
                         os.system('cls' if os.name == 'nt' else 'clear')
@@ -164,63 +168,59 @@ def modulo_relatorios(clientes, advogados, processos):
                         os.system('cls' if os.name == 'nt' else 'clear')
                     
                     else:
-                        print("Opção inválida! Escolha uma das opções do menu!")
+                        print("Opção inválida! Digite uma das opções do menu!")
                         print("\t\t---------------------")
                         input("Tecle ENTER para voltar ao menu de filtros...")
                         os.system('cls' if os.name == 'nt' else 'clear')
                         print()
 
                 elif acao2 == "3":
-                    print("1) Filtrar por cliente")
-                    print("2) Filtrar por advogado")
-                    print("3) Filtrar pelo mês do cadastro")
-                    print("4) Filtrar somente os processos encerrados")
+                    print("1) Filtrar por Cliente")
+                    print("2) Filtrar por Advogado")
+                    print("3) Filtrar pelo Mês do Cadastro")
+                    print("4) Filtrar somente os Processos Encerrados")
                     print()
-                    acao3 = input("Informe qual filtro você quer utilizar: ")
+                    acao3 = input("Informe qual filtro você quer utilizar: ").strip()
                     os.system('cls' if os.name == 'nt' else 'clear')
                     print()
-
                     if acao3 == "1":
                         cpf_cnpj = validaCpf_Cnpj()
                         if cpf_cnpj in clientes:
                             print()
-                            print(f"\t\tTODOS OS PROCESSOS DO CLIENTE {cpf_cnpj} - {clientes[cpf_cnpj][0]} ")
+                            print(f"TODOS OS PROCESSOS DO CLIENTE {cpf_cnpj} - {clientes[cpf_cnpj][0]}: ")
+                            print()
+                            print(f"{'CÓDIGO':^12} | {'DESCRIÇÃO':^40} | {'ADVOGADO':^20} | {'DATA CADASTRO':^15} | {'STATUS':^10}")
+                            print("-" * 115)
                             totalProcesso = 0
                             for codigo in processos:
-                                if clientes[cpf_cnpj][0] in processos[codigo][1]:
-                                        print()
-                                        print(f"{'CÓDIGO':^12} | {'DESCRIÇÃO':^25}| {'ADVOGADO':^20} | {'DATA CADASTRO':^15} | {'STATUS':^10}")
-                                        print("-" * 100) 
-                                        print(f"{codigo:<12} | {processos[codigo][0]:<25} | {processos[codigo][2]:<20} | {processos[codigo][3]:<15} |  {processos[codigo][4]:<10}")
-                                        print()
+                                if clientes[cpf_cnpj][0] == processos[codigo][1]:
+                                        print(f"{codigo:<12} | {processos[codigo][0]:<40} | {processos[codigo][2]:<20} | {processos[codigo][3]:<15} |  {processos[codigo][4]:<10}")
                                         totalProcesso = totalProcesso + 1
                             if totalProcesso == 0:
                                 print(f"Não há processos cadastrados no cpf/cnpj: {cpf_cnpj}.")
                         else:
-                            print("Cliente não cadastrado")
+                            print("Cliente não encontrado! Certifique-se de que digitou o CPF/CNPJ da forma exata que está no cadastro.")
                         print()  
                         input("Tecle ENTER para voltar ao menu de filtros...")
                         os.system('cls' if os.name == 'nt' else 'clear')
-
-                        
+  
                     elif acao3 == "2":
                         oab = validaOab()
                         if oab in advogados:
                             print()
-                            print(f"\t\tTODOS OS PROCESSOS ACOMPANHADOS PELO ADVOGADO {oab} - {advogados[oab][0]} ")
+                            print(f"TODOS OS PROCESSOS DO ADVOGADO {oab} - {advogados[oab][0]}: ")
                             print()
-                            print(f"{'CÓDIGO':^10} | {'DESCRIÇÃO':^30}| {'CLIENTE':^20} | {'DATA CADASTRO':^15} | {'STATUS':^10}")
-                            print("-" * 100) 
+                            print(f"{'CÓDIGO':^12} | {'DESCRIÇÃO':^40} | {'CLIENTE':^20} | {'DATA CADASTRO':^15} | {'STATUS':^10}")
+                            print("-" * 115)
                             totalProcesso = 0
                             for codigo in processos:
-                                if advogados[oab][0] in processos[codigo][2]:
-                                        print(f"{codigo:<10} | {processos[codigo][0]:<30} | {processos[codigo][1]:<20} | {processos[codigo][3]:<15} |  {processos[codigo][4]:<10}")
-                                        print()
+                                if advogados[oab][0] == processos[codigo][2]:
+                                        print(f"{codigo:<12} | {processos[codigo][0]:<40} | {processos[codigo][1]:<20} | {processos[codigo][3]:<15} |  {processos[codigo][4]:<10}")
                                         totalProcesso = totalProcesso + 1
                             if totalProcesso == 0:
                                 print(f"Não há processos cadastrados com o acompanhamento do:  {oab}.")
                         else:
-                            print("Advogado não cadastrado")
+                            print("Advogado não encontrado! Certifique-se de que digitou a OAB da forma exata que está no cadastro.")
                         print()  
                         input("Tecle ENTER para voltar ao menu de filtros...")
                         os.system('cls' if os.name == 'nt' else 'clear')
@@ -228,16 +228,20 @@ def modulo_relatorios(clientes, advogados, processos):
 
                     elif acao3 == "3":
                         print("Informe o mês e o ano dos processos que deseja listar")
-                        mesInicio = int(input("Informe o mês inicial(digite em 2 dígitos): "))
-                        anoInicio = int(input("Informe o ano inicial(digite os 4 dígitos): "))
-                        mesFim = int(input("Informe o mês final(digite em 2 dígitos): "))
-                        anoFim = int(input("Informe o ano final(digite os 4 dígitos): "))
+                        mesInicio = validaMes("Informe o mês inicial(digite em 2 dígitos): ")
+                        anoInicio = validaAno("Informe o ano inicial(digite os 4 dígitos): ")
+                        mesFim = validaMes("Informe o mês final(digite em 2 dígitos): ")
+                        anoFim = validaAno("Informe o ano final(digite os 4 dígitos): ")
+                        while (anoInicio>anoFim):
+                                print()
+                                print("O ano final deve ser posterior ou igual ao ano inicial! Tente novamente")
+                                anoFim = validaAno("Informe o ano final(digite os 4 dígitos): ")
 
                         inicio = (anoInicio, mesInicio)
                         fim = (anoFim, mesFim)
                         totalProcesso = 0
                         print()
-                        print(f"\t\t\t\tTODOS OS PROCESSOS CADASTRADOS ENTRE O PERÍODO INFORMADO")
+                        print("TODOS OS PROCESSOS CADASTRADOS ENTRE O PERÍODO INFORMADO: ")
                         print()
                         for codigo in processos:
                             dia, mes, ano = map(int, processos[codigo][3].split('/'))
@@ -264,7 +268,7 @@ def modulo_relatorios(clientes, advogados, processos):
                         os.system('cls' if os.name == 'nt' else 'clear')
 
                     else:
-                        print("Opção inválida! Escolha uma das opções do menu!")
+                        print("Opção inválida! Digite uma das opções do menu!")
                         print("\t\t---------------------")
                         input("Tecle ENTER para voltar ao menu de filtros...")
                         os.system('cls' if os.name == 'nt' else 'clear')
@@ -275,20 +279,19 @@ def modulo_relatorios(clientes, advogados, processos):
                     break
 
                 else:
-                    print("Opção inválida! Escolha uma das opções do menu!")
+                    print("Opção inválida! Digite uma das opções do menu!")
                     print("\t\t---------------------")
                     input("Tecle ENTER para voltar ao menu de filtros...")
                     os.system('cls' if os.name == 'nt' else 'clear')
                     print()
-
 
         elif acao1 == "0":
             os.system('cls' if os.name == 'nt' else 'clear')
             break
 
         else:
-            print("Opção inválida! Escolha uma das opções do menu!")
+            print("Opção inválida! Digite uma das opções do menu!")
             print("\t\t---------------------")
-            input("Tecle ENTER para voltar ao menu de processos...")
+            input("Tecle ENTER para voltar ao menu de filtros...")
             os.system('cls' if os.name == 'nt' else 'clear')
             print()
