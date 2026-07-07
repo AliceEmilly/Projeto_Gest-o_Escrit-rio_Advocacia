@@ -56,7 +56,7 @@ def modulo_advogados(advogados,processos):
             grava_advogados(advogados)
             print()
             print("Advogado cadastrado com sucesso!!!")
-            print("\t\t---------------------")
+            print("-" * 100)
             input("Tecle ENTER para voltar ao menu de advogados...")
             os.system('cls' if os.name == 'nt' else 'clear')
             print()
@@ -97,7 +97,7 @@ def modulo_advogados(advogados,processos):
                     if processos[codigo][2] == advogados[id][0] :
                             processos[codigo][2] = nome
                 espec = input("Deseja manter a especialidade atual(S/N)? ")
-                if espec.lower() == "s":
+                if espec.strip().lower()  == "s":
                    espec = advogados[id][1]
                 else:
                     espec = validaEspec()
@@ -108,7 +108,6 @@ def modulo_advogados(advogados,processos):
                 grava_processos(processos)
                 print()
                 print("Advogado atualizado com sucesso!!!")
-                print()
             else:
                 print("Advogado não encontrado! Certifique-se de que digitou a OAB da forma exata que está no cadastro.")
             print("-" * 100)
@@ -121,7 +120,7 @@ def modulo_advogados(advogados,processos):
             id = validaOab()
             print()
             if id in advogados:
-                print("\t\t   DADOS ATUAIS: ")
+                print("\t\t      DADOS ATUAIS: ")
                 print("Nome: ", advogados[id][0])
                 print("Especialidade: ", advogados[id][1])
                 print("Telefone: ", advogados[id][2])
@@ -130,10 +129,10 @@ def modulo_advogados(advogados,processos):
                 print()
                 if advogados[id][4]  == "Ativo":
                     confirmacao = input("Deseja desativar esse advogado(S/N)? ")
-                    if confirmacao.lower() == "s":
+                    if confirmacao.strip().lower()  == "s":
                         vinculo = False
                         for codigo in processos:
-                            if (processos[codigo][4] == "Ativo") and (advogados[id][0] == processos[codigo][2]):
+                            if (processos[codigo][4] == "Ativo") and (advogados[id][0] == processos[codigo][2]): 
                                 vinculo = True
                         if vinculo:
                             print("Esse advogado está vinculado a um processo em andamento. Encerre o processo ou troque o advogado responsável antes de desativá-lo.")
@@ -144,7 +143,7 @@ def modulo_advogados(advogados,processos):
                             print("Advogado desativado com sucesso!!!")
                 else:
                     confirmacao = input("Deseja reativar esse advogado(S/N)? ")
-                    if confirmacao.lower() == "s":
+                    if confirmacao.strip().lower()  == "s":
                         advogados[id][4] = "Ativo"
                         grava_advogados(advogados)
                         print()

@@ -49,7 +49,7 @@ def modulo_processos(processos,clientes,advogados):
                 assunto = validaDescricao()
                 cliente = validaCpf_Cnpj()
                 if cliente in clientes: 
-                    if clientes[cliente][3]=="Ativo":
+                    if clientes[cliente][3] == "Ativo":
                         cliente = clientes[cliente][0]
                     else:
                         print()
@@ -63,9 +63,11 @@ def modulo_processos(processos,clientes,advogados):
                     input("Tecle ENTER para voltar ao menu principal ...")
                     os.system('cls' if os.name == 'nt' else 'clear')
                     break
+                #nesse caso o código verifica se existe aquele cliente no dicionário cliente, se sim, ele verifica se tá ativo, se não tiver manda ativar e volta pro menu principal
+                #caso o cliente não esteja cadastrado o mesmo acontece. Caso ele esteja ativo e cadastrado, a variável cliente vai guardar o nome associado aquela chave que foi digitada
                 advogado = validaOab()
                 if advogado in advogados:
-                    if advogados[advogado][4]=="Ativo":
+                    if advogados[advogado][4] == "Ativo":
                         advogado = advogados[advogado][0]
                     else:
                         print()
@@ -80,12 +82,12 @@ def modulo_processos(processos,clientes,advogados):
                     os.system('cls' if os.name == 'nt' else 'clear')
                     break
                 data = validaData()
-                status= "Ativo"
+                status = "Ativo"
                 processos[numero] = [assunto, cliente, advogado, data, status]
                 grava_processos(processos)
                 print()
                 print("Processo cadastrado com sucesso!!!")
-                print("\t\t---------------------")
+                print("-" * 100)
                 input("Tecle ENTER para voltar ao menu de processos...")
                 os.system('cls' if os.name == 'nt' else 'clear')
                 print()
@@ -121,22 +123,20 @@ def modulo_processos(processos,clientes,advogados):
                 print("Status: ", processos[id][4])
                 print()
                 print("\t\t    MODIFICAÇÃO: ")
-                
                 desc = input("Deseja manter a descrição atual(S/N)? ") 
-                if desc.lower() == "s":
+                if desc.strip().lower() == "s":
                     desc = processos[id][0]
                 else:
                     print()
                     desc = validaDescricao()
-            
                 advogado = input("Deseja manter o advogado atual(S/N)? ") 
-                if advogado.lower() == "s":
+                if advogado.strip().lower() == "s":
                     advogado = processos[id][2]
                 else:
                     print()
                     oab = validaOab()
                     if oab in advogados:
-                        if advogados[oab][4]=="Ativo":
+                        if advogados[oab][4] == "Ativo":
                             advogado = advogados[oab][0]
                         else:
                             print()
@@ -150,11 +150,11 @@ def modulo_processos(processos,clientes,advogados):
                         input("Tecle ENTER para voltar ao menu principal ...")
                         os.system('cls' if os.name == 'nt' else 'clear')
                         break
-                processos[id] = [desc,processos[id][1], advogado, processos[id][3], processos[id][4]]
+                    #faz a mesma verificação de antes
+                processos[id] = [desc,processos[id][1], advogado, processos[id][3], processos[id][4]] #nesse caso vai manter tanto o cliente, quanto a data e o satus do processo
                 grava_processos(processos)
                 print()
                 print("Processo atualizado com sucesso!!!")
-                print()
             else:
                 print()
                 print("Processo não encontrado! Certifique-se de que digitou o código da forma exata que está no cadastro.")
@@ -168,7 +168,7 @@ def modulo_processos(processos,clientes,advogados):
             id = validaNumero()
             print()
             if id in processos:
-                print("\t\t     DADOS ATUAIS: ")
+                print("\t\t       DADOS ATUAIS: ")
                 print("Descrição: ", processos[id][0])
                 print("Cliente relacionado: ", processos[id][1])
                 print("Advogado responsável: ", processos[id][2])
@@ -176,21 +176,21 @@ def modulo_processos(processos,clientes,advogados):
                 print()
                 if processos[id][4] == "Ativo":
                     confirmacao = input("Deseja encerrar esse processo(S/N)? ")
-                    if confirmacao.lower() == "s":
+                    if confirmacao.strip().lower() == "s":
                         processos[id][4] = "Encerrado"
                         grava_processos(processos)
                         print()
                         print("Processo encerrado com sucesso!!!")
                 else:
                     confirmacao = input("Deseja reativar esse processo(S/N)? ")
-                    if confirmacao.lower() == "s":
+                    if confirmacao.strip().lower() == "s":
                         cliente_ativo = False
                         for cpf_cnpj in clientes:
-                            if clientes[cpf_cnpj][0] == processos[id][1] and clientes[cpf_cnpj][3] == "Ativo":
+                            if (clientes[cpf_cnpj][3] == "Ativo") and (clientes[cpf_cnpj][0] == processos[id][1]):
                                 cliente_ativo = True
                         advogado_ativo = False
                         for oab in advogados:
-                            if advogados[oab][0] == processos[id][2] and advogados[oab][4] == "Ativo":
+                            if (advogados[oab][4] == "Ativo") and (advogados[oab][0] == processos[id][2]):
                                 advogado_ativo = True
                         if not cliente_ativo:
                             print("Não foi possível reativar: o cliente vinculado a esse processo está inativo no sistema.")
@@ -201,6 +201,8 @@ def modulo_processos(processos,clientes,advogados):
                             grava_processos(processos)
                             print()
                             print("Processo reativado com sucesso!!!")
+                    #nesse caso nós temos que verificar se o cliente e o advogado estão ativos, se pelo menos um deles não estiver, o processso não pode ser reativado
+                    #se cliente_ativo/advogado_ativo = True, não entra nem no if nem no elif, mas se for igual a False, ja que tem not na frente da condição, ela acaba ficando true e entra no bloco, aparecendo a mensagem refrente e não deixando ativar o processo
             else:
                 print()
                 print("Processo não encontrado! Certifique-se de que digitou o código da forma exata que está no cadastro.")

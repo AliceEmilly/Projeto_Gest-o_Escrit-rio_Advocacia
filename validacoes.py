@@ -1,14 +1,14 @@
 def validaNome():
-    nome = input("Nome: ").strip()
+    nome = input("Nome(25 caracteres): ").strip()
     while nome == "":
         print()
-        print("O nome não pode ficar em branco. Digite o nome completo.")
+        print("O nome não pode ficar em branco. Digite um nome e um sobrenome.")
         nome = input("Nome: ").strip()
     return nome
 
 def validaEmail():
     email = input("Email: ").strip()
-    while (email == "") or ((email.count("@") != 1 or email.count(".") == 0)):
+    while (email == "") or ((email.count("@") != 1) or (email.count(".") == 0)): 
         print()
         print("Email inválido! Use o formato nome@dominio.com, com um único @ e pelo menos um ponto.")
         email = input("Email: ").strip()
@@ -16,8 +16,8 @@ def validaEmail():
 
 def validaTelefone():
     fone = input("Telefone: ").strip()
-    foneS = fone.replace("(", "").replace(")", "").replace("-", "")  
-    while (fone == "") or (not(foneS.isnumeric()) or (not(len(foneS) == 10 or len(foneS) == 11))):
+    foneS = fone.replace("(", "").replace(")", "").replace("-", "") 
+    while (fone == "") or (not(foneS.isnumeric()) or (len(foneS)!= 10 and len(foneS)!= 11)): 
         print()
         print("Telefone inválido! Use o formato (XX)XXXX-XXXX ou (XX)XXXXX-XXXX, só com números.")
         fone = input("Telefone: ").strip()
@@ -27,7 +27,7 @@ def validaTelefone():
 def validaCpf_Cnpj():
     cpf_cnpj = input("CPF/CNPJ do cliente: ").strip()
     cpf_cnpjS = cpf_cnpj.replace(".", "").replace("-", "").replace("/", "")
-    while (cpf_cnpj == "") or (not( cpf_cnpjS.isnumeric()) or (len(cpf_cnpjS) != 11 and len(cpf_cnpjS) != 14)):
+    while (cpf_cnpj == "") or (not(cpf_cnpjS.isnumeric()) or (len(cpf_cnpjS)!= 11 and len(cpf_cnpjS)!= 14)):
         print()
         print("CPF/CNPJ inválido! Use CPF com 11 dígitos (XXX.XXX.XXX-XX) ou CNPJ com 14 dígitos (XX.XXX.XXX/XXXX-XX).")
         cpf_cnpj = input("CPF/CNPJ: ").strip()
@@ -35,21 +35,21 @@ def validaCpf_Cnpj():
     return cpf_cnpj
 
 def validaOab():
-    oab = input("Nº da OAB(XXXXXX/UF) do advogado: ").strip()
-    while oab.count("/") != 1:
-        print()
-        print("Formato inválido! A OAB precisa ter uma única barra separando o número da UF, ex: 123456/RN.")
-        oab = input("Nº da OAB: ")
-    n, uf = oab.split("/")
-    while (oab == "") or (not n.isnumeric()) or (len(uf) != 2 or (not(uf.isalpha()))):
-        print()
-        print("OAB inválida! O número deve conter só dígitos e a UF deve ter 2 letras, ex: 123456/RN.")
-        oab = input("Nº da OAB: ").strip()
+    while True:
+        oab = input("Nº da OAB(XXXXXX/UF) do advogado: ").strip()
+        if oab.count("/") != 1:
+            print()
+            print("Formato inválido! A OAB precisa ter uma única barra separando o número da UF, ex: 123456/RN.")
+            continue 
         n, uf = oab.split("/")
-    return oab
+        if (not n.isnumeric()) or (len(uf)!= 2 or (not(uf.isalpha()))): 
+            print()
+            print("OAB inválida! O número deve conter só dígitos e a UF deve ter 2 letras, ex: 123456/RN.")
+            continue
+        return oab 
 
 def validaEspec():
-    espec = input("Especialidade: ").strip()
+    espec = input("Especialidade(30 cararcteres): ").strip()
     while espec == "":
         print()
         print("A especialidade não pode ficar em branco. Informe a área de atuação do advogado.")
@@ -67,7 +67,7 @@ def validaNumero():
     return num
 
 def validaDescricao():
-    desc = input("Breve descrição: ").strip()
+    desc = input("Breve descrição(40 caracteres): ").strip()
     while desc == "":
         print("A descrição não pode ficar em branco. Informe um breve resumo do processo.")
         print()
@@ -75,31 +75,30 @@ def validaDescricao():
     return desc
 
 def validaData():
-    data = input("Data do cadastro(DD/MM/AAAA: ").strip()
-    while data.count("/") != 2:
-        print()
-        print("Formato inválido! Use DD/MM/AAAA, com duas barras, ex: 05/03/2026.")
-        data = input("Data do cadastro(DD/MM/AAAA): ")
-    dia, mes, ano = map(int, data.split('/'))
-    while (data == "") or ((ano<=0) or (mes<1 or mes>12) or (dia<=0 or dia>31)):
-        print()
-        print("Data inválida! O dia deve ser de 1 a 31, o mês de 1 a 12, e o ano maior que 0.")
+    while True:
         data = input("Data do cadastro(DD/MM/AAAA): ").strip()
-        dia, mes, ano = map(int, data.split('/'))
-    return data
+        if data.count("/") != 2:
+            print()
+            print("Formato inválido! Use DD/MM/AAAA, com duas barras e apenas números, ex: 05/03/2026.")
+            continue
+        dia, mes, ano = data.split('/')
+        if (not data.replace("/", "").isnumeric()) or (len(dia) != 2 or len(mes) != 2 or len(ano) != 4) or (not (1 <= int(mes) <= 12)) or (not (1 <= int(dia) <= 31)) or (int(ano) <= 0):
+            print()
+            print("Data inválida! O dia deve ser de 1 a 31, o mês de 1 a 12, e o ano maior que 0.")
+            continue
+        return data
 
 def validaMes(mensagem):
-    mes = input(mensagem)
-    while (len(mes) != 2) or (not mes.isnumeric()) or (not (1 <= int(mes) <= 12)):
-        print()
+    mes = input(mensagem).strip()
+    while (not mes.isnumeric()) or (len(mes) != 2) or (not (1 <= int(mes)<= 12)): 
         print("Mês inválido! Informe um número de 01 a 12, com 2 dígitos.")
         mes = input(mensagem)
     mes = int(mes)
     return mes
 
 def validaAno(mensagem):
-    ano = input(mensagem)
-    while (len(ano) != 4) or (not ano.isnumeric()):
+    ano = input(mensagem).strip()
+    while (not ano.isnumeric()) or (len(ano) != 4) or (int(ano) <= 0):
         print()
         print("Ano inválido! Informe o ano com 4 dígitos (ex: 2026).")
         ano = input(mensagem)
@@ -107,27 +106,27 @@ def validaAno(mensagem):
     return ano
 
 def atualizacaoNome(nome, validaNome):
-    pergunta = input("Deseja manter o nome atual(S/N)? ")
+    pergunta = input("Deseja manter o nome atual(S/N)? ").strip()
     valorAtual = nome
-    if pergunta.lower() == "s":
+    if pergunta.strip().lower() == "s":
         return valorAtual
     else:
         print()
         return validaNome()
 
 def atualizacaoTelefone(telefone, validaTelefone):
-    pergunta = input("Deseja manter o telefone atual(S/N)? ")
+    pergunta = input("Deseja manter o telefone atual(S/N)? ").strip()
     valorAtual = telefone
-    if pergunta.lower() == "s":
+    if pergunta.strip().lower() == "s":
         return valorAtual
     else:
         print()
         return validaTelefone()
 
 def atualizacaoEmail(email, validaEmail):
-    pergunta = input("Deseja manter o email atual(S/N)? ")
+    pergunta = input("Deseja manter o email atual(S/N)? ").strip()
     valorAtual = email
-    if pergunta.lower() == "s":
+    if pergunta.strip().lower() == "s":
         return valorAtual
     else:
         print()
