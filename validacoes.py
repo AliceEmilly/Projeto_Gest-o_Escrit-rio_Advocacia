@@ -71,8 +71,8 @@ def validaNumero():
 def validaDescricao():
     desc = input("Breve descrição(40 caracteres): ").strip()
     while desc == "":
-        print("A descrição não pode ficar em branco. Informe um breve resumo do processo.")
         print()
+        print("A descrição não pode ficar em branco. Informe um breve resumo do processo.")
         desc = input("Descrição: ").strip()
     return desc
 
@@ -101,7 +101,7 @@ def validaMes(mensagem):
     while (not mes.isnumeric()) or (len(mes) != 2) or (not (1 <= int(mes)<= 12)): 
         print()
         print("Mês inválido! Informe um número de 01 a 12, com 2 dígitos.")
-        mes = input(mensagem)
+        mes = input(mensagem).strip()
     mes = int(mes)
     return mes
 
@@ -110,7 +110,7 @@ def validaAno(mensagem):
     while (not ano.isnumeric()) or (len(ano) != 4) or (int(ano) <= 0):
         print()
         print("Ano inválido! Informe o ano com 4 dígitos (ex: 2026).")
-        ano = input(mensagem)
+        ano = input(mensagem).strip()
     ano = int(ano)
     return ano
 

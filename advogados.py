@@ -35,7 +35,7 @@ def modulo_advogados(advogados,processos):
         print("4- Ativar/Desativar Advogado")
         print("0- Retornar ao Menu Principal")
         print()
-        acao = input("Escolha a ação que você deseja realizar: ")
+        acao = input("Escolha a ação que você deseja realizar: ").strip()
         os.system('cls' if os.name == 'nt' else 'clear')
 
         if acao == "1":
@@ -100,6 +100,7 @@ def modulo_advogados(advogados,processos):
                 if espec.strip().lower()  == "s":
                    espec = advogados[id][1]
                 else:
+                    print()
                     espec = validaEspec()
                 telefone = atualizacaoTelefone(advogados[id][2], validaTelefone)
                 email = atualizacaoEmail(advogados[id][3], validaEmail)
@@ -135,6 +136,7 @@ def modulo_advogados(advogados,processos):
                             if (processos[codigo][4] == "Ativo") and (advogados[id][0] == processos[codigo][2]): 
                                 vinculo = True
                         if vinculo:
+                            print()
                             print("Esse advogado está vinculado a um processo em andamento. Encerre o processo ou troque o advogado responsável antes de desativá-lo.")
                         else:
                             advogados[id][4] = "Inativo"
@@ -149,6 +151,7 @@ def modulo_advogados(advogados,processos):
                         print()
                         print("Advogado reativado com sucesso!!!")
             else:
+                print()
                 print("Advogado não encontrado! Certifique-se de que digitou a OAB da forma exata que está no cadastro.")
             print("-" * 100)
             input("Tecle ENTER para voltar ao menu de advogados...")

@@ -139,7 +139,7 @@ def modulo_relatorios(clientes, advogados, processos):
                         os.system('cls' if os.name == 'nt' else 'clear')
                     
                     elif acao3 == "3":
-                        area = input("Informe a área do direito que você deseja pesquisar: ")
+                        area = input("Informe a área do direito que você deseja pesquisar: ").strip()
                         totalArea = 0
                         print("-"*40)
                         for oab in advogados:
@@ -234,10 +234,10 @@ def modulo_relatorios(clientes, advogados, processos):
                         mesFim = validaMes("Informe o mês final(digite em 2 dígitos): ")
                         anoFim = validaAno("Informe o ano final(digite os 4 dígitos): ")
                         while anoInicio>anoFim:
-                                print()
-                                print("O ano final deve ser posterior ou igual ao ano inicial! Tente novamente")
-                                anoFim = validaAno("Informe o ano final(digite os 4 dígitos): ")
-                        while anoInicio==anoFim and mesInicio>mesFim:
+                            print()
+                            print("O ano final deve ser posterior ou igual ao ano inicial! Tente novamente")
+                            anoFim = validaAno("Informe o ano final(digite os 4 dígitos): ")
+                        while (anoInicio==anoFim and mesInicio>mesFim):
                             print()
                             print("Quando o ano inicial e o ano final são iguais, o mês inicial deve ser menor que o final")
                             mesInicio = validaMes("Informe o mês inicial(digite em 2 dígitos): ")
