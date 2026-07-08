@@ -25,7 +25,8 @@ def grava_clientes(clientes):
     arq_clientes.close()
 
 def modulo_clientes(clientes,processos):
-    while True: 
+    func = True
+    while func: 
         print("\t\t---MÓDULO CLIENTES---") 
         print()
         print("1- Cadastrar Cliente")
@@ -36,7 +37,6 @@ def modulo_clientes(clientes,processos):
         print()
         acao = input("Escolha a ação que você deseja realizar: ").strip() 
         os.system('cls' if os.name == 'nt' else 'clear') 
-        print()
         
         if acao == "1":
             print("\t\t   ---CADASTRAR CLIENTE---")
@@ -44,7 +44,7 @@ def modulo_clientes(clientes,processos):
             cpf_cnpj = validaCpf_Cnpj()
             if cpf_cnpj in clientes: 
                 print("Esse cliente já foi cadastrado!!")
-                print("\t\t--------------------")
+                print("--------------------------------")
                 input("Tecle ENTER para voltar ao menu de clientes...")
                 os.system('cls' if os.name == 'nt' else 'clear')
             else:
@@ -58,7 +58,6 @@ def modulo_clientes(clientes,processos):
                 print("-" * 100)
                 input("Tecle ENTER para voltar ao menu de clientes...")
                 os.system('cls' if os.name == 'nt' else 'clear')
-                print()
         
         elif acao == "2":
             print("\t\t  ---EXIBIR DADOS---")
@@ -87,10 +86,10 @@ def modulo_clientes(clientes,processos):
                print("Email: ", clientes[id][2])
                print("Status: ", clientes[id][3])
                print()
-               print("\t\t  MODIFICAÇÃO: ")
+               print("\t\t    MODIFICAÇÃO: ")
                nome = atualizacaoNome(clientes[id][0], validaNome) 
                for codigo in processos: 
-                    if processos[codigo][1] == clientes[id][0] :
+                    if clientes[id][0] == processos[codigo][1]:
                             processos[codigo][1] = nome
                telefone = atualizacaoTelefone(clientes[id][1],validaTelefone)
                email = atualizacaoEmail(clientes[id][2],validaEmail)
@@ -104,7 +103,6 @@ def modulo_clientes(clientes,processos):
             print("-" * 100)
             input("Tecle ENTER para voltar ao menu de clientes...")
             os.system('cls' if os.name == 'nt' else 'clear')
-            print()
           
         elif acao == "4":
             print("\t\t---ATIVAR/DESATIVAR CLIENTE---")
@@ -146,15 +144,13 @@ def modulo_clientes(clientes,processos):
             print("-" * 100)
             input("Tecle ENTER para voltar ao menu de clientes...")
             os.system('cls' if os.name == 'nt' else 'clear')
-            print()
 
         elif acao == "0":
             os.system('cls' if os.name == 'nt' else 'clear')
-            break
+            func = False
 
         else:
             print("Opção inválida! Digite uma das opções do menu!")
-            print("\t\t--------------------")
+            print("-" * 47)
             input("Tecle ENTER para voltar ao menu de clientes...")
             os.system('cls' if os.name == 'nt' else 'clear')
-            print()

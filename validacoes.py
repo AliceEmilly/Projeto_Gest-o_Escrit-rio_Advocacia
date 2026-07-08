@@ -1,8 +1,10 @@
+from datetime import datetime
+
 def validaNome():
     nome = input("Nome(25 caracteres): ").strip()
     while nome == "":
         print()
-        print("O nome não pode ficar em branco. Digite um nome e um sobrenome.")
+        print("O nome não pode ficar em branco. Digite um nome.")
         nome = input("Nome: ").strip()
     return nome
 
@@ -76,7 +78,7 @@ def validaDescricao():
 
 def validaData():
     while True:
-        data = input("Data do cadastro(DD/MM/AAAA): ").strip()
+        data = input("Data de abertura do processo(DD/MM/AAAA): ").strip()
         if data.count("/") != 2:
             print()
             print("Formato inválido! Use DD/MM/AAAA, com duas barras e apenas números, ex: 05/03/2026.")
@@ -86,11 +88,18 @@ def validaData():
             print()
             print("Data inválida! O dia deve ser de 1 a 31, o mês de 1 a 12, e o ano maior que 0.")
             continue
+        try:
+            datetime.strptime(data, "%d/%m/%Y")
+        except ValueError:
+            print()
+            print("Data inválida! Esse dia não existe nesse mês (ex: 31/02).")
+            continue
         return data
 
 def validaMes(mensagem):
     mes = input(mensagem).strip()
     while (not mes.isnumeric()) or (len(mes) != 2) or (not (1 <= int(mes)<= 12)): 
+        print()
         print("Mês inválido! Informe um número de 01 a 12, com 2 dígitos.")
         mes = input(mensagem)
     mes = int(mes)

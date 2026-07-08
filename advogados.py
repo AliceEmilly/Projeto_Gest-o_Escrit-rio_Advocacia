@@ -25,7 +25,8 @@ def grava_advogados(advogados):
     arq_advogados.close()
 
 def modulo_advogados(advogados,processos):
-    while True:
+    func = True
+    while func:
         print("\t\t---MÓDULO ADVOGADOS---")
         print()
         print("1- Cadastrar Advogado")
@@ -36,7 +37,6 @@ def modulo_advogados(advogados,processos):
         print()
         acao = input("Escolha a ação que você deseja realizar: ")
         os.system('cls' if os.name == 'nt' else 'clear')
-        print()
 
         if acao == "1":
             print("\t\t   ---CADASTRAR ADVOGADO---")
@@ -44,7 +44,7 @@ def modulo_advogados(advogados,processos):
             oab = validaOab()
             if oab in advogados:
                 print("Esse advogado já foi cadastrado!!")
-                print("\t\t--------------------")
+                print("--------------------------------")
                 input("Tecle ENTER para voltar ao menu de advogados...")
                 os.system('cls' if os.name == 'nt' else 'clear')
             else:
@@ -153,15 +153,14 @@ def modulo_advogados(advogados,processos):
             print("-" * 100)
             input("Tecle ENTER para voltar ao menu de advogados...")
             os.system('cls' if os.name == 'nt' else 'clear')
-            print()
 
         elif acao == "0":
             os.system('cls' if os.name == 'nt' else 'clear')
-            break
+            func = False
 
         else:
             print("Opção inválida! Digite uma das opções do menu!")
-            print("\t\t---------------------")
+            print("-" * 47)
             input("Tecle ENTER para voltar ao menu de advogados...")
             os.system('cls' if os.name == 'nt' else 'clear')
             print()

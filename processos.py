@@ -24,7 +24,8 @@ def grava_processos(processos):
     arq_processos.close()
 
 def modulo_processos(processos,clientes,advogados):
-    while True:
+    func = True
+    while func:
         print("\t\t---MÓDULO PROCESSOS---")
         print()
         print("1- Cadastrar Processo")
@@ -35,14 +36,13 @@ def modulo_processos(processos,clientes,advogados):
         print()
         acao = input("Escolha a ação que você deseja realizar: ").strip()
         os.system('cls' if os.name == 'nt' else 'clear')
-        print()
 
         if acao == "1":
             print("\t\t---CADASTRAR PROCESSO---")
             numero = validaNumero()
             if numero in processos: 
                 print("Esse processo já foi cadastrado!!")
-                print("\t\t----------------------------")
+                print("--------------------------------")
                 input("Tecle ENTER para voltar ao menu de clientes...")
                 os.system('cls' if os.name == 'nt' else 'clear')
             else:
@@ -54,17 +54,19 @@ def modulo_processos(processos,clientes,advogados):
                     else:
                         print()
                         print("Cliente não ativado no sistema! Ative o cliente antes de cadastrar o processo!")
+                        print("-"*100)
                         input("Tecle ENTER para voltar ao menu principal ...")
                         os.system('cls' if os.name == 'nt' else 'clear')
-                        break
+                        func = False
+                        continue
                 else:
                     print()
                     print("Cliente não cadastrado no sistema! Cadastre o cliente antes de cadastrar o processo!")
+                    print("-"*100)
                     input("Tecle ENTER para voltar ao menu principal ...")
                     os.system('cls' if os.name == 'nt' else 'clear')
-                    break
-                #nesse caso o código verifica se existe aquele cliente no dicionário cliente, se sim, ele verifica se tá ativo, se não tiver manda ativar e volta pro menu principal
-                #caso o cliente não esteja cadastrado o mesmo acontece. Caso ele esteja ativo e cadastrado, a variável cliente vai guardar o nome associado aquela chave que foi digitada
+                    func = False
+                    continue
                 advogado = validaOab()
                 if advogado in advogados:
                     if advogados[advogado][4] == "Ativo":
@@ -72,15 +74,19 @@ def modulo_processos(processos,clientes,advogados):
                     else:
                         print()
                         print("Advogado não ativado no sistema! Ative o advogado antes de abrir o processo!")
+                        print("-"*100)
                         input("Tecle ENTER para voltar ao menu principal ...")
                         os.system('cls' if os.name == 'nt' else 'clear')
-                        break
+                        func = False
+                        continue
                 else:
                     print()
                     print("Advogado não cadastrado no sistema! Cadastre o advogado antes de abrir o processo!")
+                    print("-"*100)
                     input("Tecle ENTER para voltar ao menu principal ...")
                     os.system('cls' if os.name == 'nt' else 'clear')
-                    break
+                    func = False
+                    continue
                 data = validaData()
                 status = "Ativo"
                 processos[numero] = [assunto, cliente, advogado, data, status]
@@ -143,15 +149,14 @@ def modulo_processos(processos,clientes,advogados):
                             print("Advogado não ativado no sistema! Ative o advogado antes de abrir o processo!")
                             input("Tecle ENTER para voltar ao menu principal ...")
                             os.system('cls' if os.name == 'nt' else 'clear')
-                            break
+                            func = False
                     else:
                         print()
                         print("Advogado não cadastrado no sistema! Cadastre o advogado antes de abrir o processo!")
                         input("Tecle ENTER para voltar ao menu principal ...")
                         os.system('cls' if os.name == 'nt' else 'clear')
-                        break
-                    #faz a mesma verificação de antes
-                processos[id] = [desc,processos[id][1], advogado, processos[id][3], processos[id][4]] #nesse caso vai manter tanto o cliente, quanto a data e o satus do processo
+                        func = False
+                processos[id] = [desc,processos[id][1], advogado, processos[id][3], processos[id][4]] 
                 grava_processos(processos)
                 print()
                 print("Processo atualizado com sucesso!!!")
@@ -161,7 +166,6 @@ def modulo_processos(processos,clientes,advogados):
             print("-" * 100)
             input("Tecle ENTER para voltar ao menu de processos...")
             os.system('cls' if os.name == 'nt' else 'clear')
-            print()
 
         elif acao == "4":
             print("\t\t---ATIVAR/ENCERRAR PROCESSO---")
@@ -201,23 +205,19 @@ def modulo_processos(processos,clientes,advogados):
                             grava_processos(processos)
                             print()
                             print("Processo reativado com sucesso!!!")
-                    #nesse caso nós temos que verificar se o cliente e o advogado estão ativos, se pelo menos um deles não estiver, o processso não pode ser reativado
-                    #se cliente_ativo/advogado_ativo = True, não entra nem no if nem no elif, mas se for igual a False, ja que tem not na frente da condição, ela acaba ficando true e entra no bloco, aparecendo a mensagem refrente e não deixando ativar o processo
             else:
                 print()
                 print("Processo não encontrado! Certifique-se de que digitou o código da forma exata que está no cadastro.")
             print("-" * 100)
             input("Tecle ENTER para voltar ao menu de processos...")
             os.system('cls' if os.name == 'nt' else 'clear')
-            print()
 
         elif acao == "0":
             os.system('cls' if os.name == 'nt' else 'clear')
-            break
+            func = False
 
         else:
             print("Opção inválida! Digite uma das opções do menu!")
-            print("\t\t---------------------")
+            print("-" * 47)
             input("Tecle ENTER para voltar ao menu de processos...")
             os.system('cls' if os.name == 'nt' else 'clear')
-            print()
